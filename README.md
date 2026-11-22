@@ -5,5 +5,9 @@ docker compose up -d
 mvn clean compile exec:java
 
 # 3. Stop
-docker compose down          # keep data
+docker compose down          # keep data 
+
 docker compose down -v       # delete data
+
+# Testing:
+mvn clean verify    # Docker should be active
