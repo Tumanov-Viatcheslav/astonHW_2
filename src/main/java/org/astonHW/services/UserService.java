@@ -44,7 +44,7 @@ public class UserService {
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Name required");
         }
-        if (name.length() > 100) {
+        if (name.length() > 255) {
             throw new IllegalArgumentException("Name is too long (max 255)");
         }
     }

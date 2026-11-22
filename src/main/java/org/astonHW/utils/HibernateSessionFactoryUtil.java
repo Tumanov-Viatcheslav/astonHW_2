@@ -10,7 +10,7 @@ public final class HibernateSessionFactoryUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(HibernateSessionFactoryUtil.class);
 
-    private static final SessionFactory SESSION_FACTORY = buildSessionFactory();
+    private static volatile SessionFactory SESSION_FACTORY;
 
     private HibernateSessionFactoryUtil() {
     }
@@ -36,11 +36,26 @@ public final class HibernateSessionFactoryUtil {
     }
 
     public static SessionFactory getSessionFactory() {
-        return SESSION_FACTORY;
+        SessionFactory sf = SESSION_FACTORY;
+        if (sf == null) {
+            synchronized (HibernateSessionFactoryUtil.class) {
+                sf = SESSION_FACTORY;
+                if (sf == null) {
+                    sf = buildSessionFactory();
+                    SESSION_FACTORY = sf;
+                }
+            }
+        }
+        return sf;
     }
 
     public static void close() {
         logger.info("Closing SessionFactory...");
         SESSION_FACTORY.close();
+        SESSION_FACTORY = null;
+    }
+
+    public static void setSessionFactory(SessionFactory sessionFactory) {
+        SESSION_FACTORY = sessionFactory;
     }
 }
