@@ -127,6 +127,8 @@ class UserServiceTest {
             verify(userDao).findById(1L);
 
             assertNotEquals(null, user);
+            if (user == null)
+                return;
             assertEquals("ValidName", user.getName());
             assertEquals("valid@email.com", user.getEmail());
             assertEquals(20, user.getAge());
