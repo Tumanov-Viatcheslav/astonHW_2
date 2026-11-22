@@ -237,13 +237,6 @@ class UserServiceTest {
     @Nested
     @DisplayName("Delete user method - 'deleteById'")
     class DeleteUser {
-        private User validUser;
-
-        @BeforeEach
-        void setUp() {
-            validUser = new User(1L, "ValidName", "valid@email.com", 20);
-        }
-
         @Test
         @DisplayName("Valid user deletion test")
         void deleteById_whenOk() {
